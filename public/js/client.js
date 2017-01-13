@@ -13,7 +13,7 @@
             dataType:'json'
         })
         .done(function (result) { //this waits for the ajax to return with a succesful promise object
-           console.log("client js line 16", result);
+           displayResults(result);
         })
        .fail(function (jqXHR, error, errorThrown) {
             console.log(jqXHR);
@@ -21,5 +21,24 @@
             console.log(errorThrown);
         });
   });
+  function displayResults(result){
+   
+   console.log(result);
+   
+    //create an empty variable to store one LI for each one the results
+    var buildTheHtmlOutput = "";
+
+    $.each(result, function (resultKey, resultValue) {
+
+        //create and populate one LI for each of the results
+        buildTheHtmlOutput += "<li>";
+        buildTheHtmlOutput += "<p>" + resultValue.team_name + "</p>"; 
+        buildTheHtmlOutput += "<p>" + resultValue.city + "</p>"; 
+        buildTheHtmlOutput += "<p>" + resultValue.abbreviation + "</p>"; 
+               
+        buildTheHtmlOutput += "</li>";
+    });
+   $(".team-names-result ul").html(buildTheHtmlOutput);
+  }
         
  });
