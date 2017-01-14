@@ -2,6 +2,8 @@ var unirest = require('unirest');
 var express = require('express');
 var bodyParser = require('body-parser');
 var events = require('events');
+var config = require('./config');
+var Team = require('./models/team');
 
 //var node = require("node");
 var http = require('http');
@@ -9,9 +11,34 @@ var mongoose = require('mongoose');
 
 var app = express();
 
+
 //serves static files and uses json bodyparser
 app.use(express.static('public'));
 app.use(bodyParser.json());
+
+/* STEP 2 - creating objects and constructors*/
+var runServer = function (callback) {
+    mongoose.connect(config.DATABASE_URL, function (err) {
+        if (err && callback) {
+            return callback(err);
+        }
+
+        app.listen(config.PORT, function () {
+            console.log('Listening on localhost:' + config.PORT);
+            if (callback) {
+                callback();
+            }
+        });
+    });
+};
+
+if (require.main === module) {
+    runServer(function (err) {
+        if (err) {
+            console.error(err);
+        }
+    });
+};
 
 // module.exports =function(query,callback) {
 
@@ -70,8 +97,29 @@ app.get('/team/:team_name', function(request, response, error) {
 
         });
     }
+    //Handling Database CRUD
+    Team.find(function (err, teams) {
+        if (err) {
+            return response.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        response.status(200).json(teams);
+    });
 });
 
+app.post('/teams', function (req, res) {
+    Team.create({
+        name: req.body.name
+    }, function (err, teams) {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal Server Error'
+            });
+        }
+        res.status(201).json(teams);
+    });
+});
 
 
 app.listen(process.env.PORT || 8080, function() {

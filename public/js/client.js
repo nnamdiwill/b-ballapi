@@ -20,6 +20,31 @@
             console.log(error);
             console.log(errorThrown);
         });
+        
+  });
+  
+   $('#player_input').on('submit', function (event) {
+       //if the page refreshes when you submit the form use "preventDefault()" to force JavaScript to handle the form submission
+        event.preventDefault();
+    var bTeams = $("#team_name").val();
+        console.log("bteams",bTeams);
+        
+    
+    $.ajax({
+            type:"POST",
+            url:"/team/",
+            dataType:'json'
+        })
+        .done(function (result) { //this waits for the ajax to return with a succesful promise object
+           //displayResults(result);
+           console.log(result);
+        })
+       .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+        
   });
   function displayResults(result){
    
