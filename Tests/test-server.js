@@ -24,7 +24,7 @@ describe('b-ballapi', function() {
     });
  it('should list teams on GET', function(done) {
         chai.request(app)
-            .get('/teams')
+            .get('/team')
             .end(function(err, res) {
                 should.equal(err, null);
                 res.should.have.status(200);

@@ -108,7 +108,7 @@ app.get('/team/:team_name', function(request, response, error) {
     });
 });
 
-app.post('/teams', function (req, res) {
+app.post('/team', function (req, res) {
     Team.create({
         name: req.body.name
     }, function (err, teams) {

@@ -24,3 +24,7 @@ html {
     background-size: cover;
 }
 
+.app, .team-names-result, .PlaySong {
+    text-align: center;
+}
+
