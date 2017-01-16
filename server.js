@@ -97,6 +97,61 @@ app.get('/team/:team_name', function(request, response, error) {
 
         });
     }
+    //second api call
+    var getBallTeamPlayer = function(player_name, args) {
+
+    // console.log("inside the getBallTeam function");
+
+    var emitter2 = new events.EventEmitter();
+
+    unirest.post('http://api.probasketballapi.com/player/last_name' + player_name)
+        .qs(args)
+        //after api call we get the response inside the "response" parameter
+        .end(function(response) {
+            console.log(response);
+            //success scenario
+            if (response.ok) {
+                emitter2.emit('end', response.body);
+            }
+            //failure scenario
+            else {
+                //console.log("error line 28");
+                emitter2.emit('error', response.code);
+            }
+        });
+    return emitter2;
+};
+
+//api call between the view and the controller
+app.get('/player/:last_name', function(request, response, error) {
+
+
+    if (request.params.player_name == "") {
+        response.json("Specify a plaers last name");
+    }
+    else {
+
+        var ballPlayerDetails = getBallTeamPlayer(request.params.player_name, {
+            api_key: 'X1ae6KWniBjpucwfryJO4hIvtqmYMo2L'
+        });
+
+        //get the data from the first api call
+        ballPlayerDetails.on('end', function(item) {
+            //console.log(item);
+            //apiOutput = item;
+            //return item;
+            response.json(item);
+
+
+        });
+
+        //error handling
+        ballPlayerDetails.on('error', function(code) {
+            //console.log("error line 54");
+            response.sendStatus(code);
+
+        });
+    }
     //Handling Database CRUD
     Team.find(function (err, teams) {
         if (err) {
@@ -124,4 +179,5 @@ app.post('/team', function (req, res) {
 
 app.listen(process.env.PORT || 8080, function() {
     console.log("Server is log");
+});
 });
