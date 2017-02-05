@@ -1,19 +1,47 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>B-Ball API</title>
 </head>
+
 <body>
-    <link rel="stylesheet" href="ball.css" type="text/css" />
-    <script type="text/javascript" src="app.js"></script>
-    
-    <div = "app">
-    <h1> Please enter Your Team</h1>
-    <form>
-      Team:  <input type="text" name=""/>
-        <input type="submit" value="Submit"/>
-    </form>
+    <link rel="stylesheet" href="css/ball.css" type="text/css" />
+
+    <section class="app">
+        <h1> Please enter Your Team </h1>
+        <form id="team_input">
+            Team: <input type="text" name="" value="warriors" id="team_name" />
+            <input type="submit" value="Submit" id="team_submit" />
+        </form>
+    </section>
+    <section class="team-names-result">
+        <ul></ul>
+    </section>
+     <section class="app">
+        <h1> Please enter Your player Last Name </h1>
+        <form id="player_input">
+            Team: <input type="text" name="" value="warriors" id="player_name" />
+            <input type="submit" value="Submit" id="team_submit" />
+        </form>
+    </section>
+    <section class="player-names-result">
+        <ul></ul>
+    </section>
+    <div class="PlaySong">
+        <button>Play Song
+        <audio controls>
+            <source src="sounds/10 - Basketball (Album Version).mp3" type="audio/mpeg">
+            
+            </audio>
+            </button>
     </div>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js/client.js"></script>
 </body>
+
 </html>
