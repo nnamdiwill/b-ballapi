@@ -164,6 +164,7 @@ app.get('/player/:last_name', function(request, response, error) {
 });
 
 app.post('/team', function (req, res) {
+    console.log(req.body.name);
     Team.create({
         name: req.body.name
     }, function (err, teams) {
@@ -177,7 +178,7 @@ app.post('/team', function (req, res) {
 });
 
 
-app.listen(process.env.PORT || 8080, function() {
+app.listen(3000, function() {
     console.log("Server is log");
 });
 });

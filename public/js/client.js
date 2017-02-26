@@ -26,13 +26,14 @@
    $('#player_input').on('submit', function (event) {
        //if the page refreshes when you submit the form use "preventDefault()" to force JavaScript to handle the form submission
         event.preventDefault();
-    var bTeams = $("#team_name").val();
+    var bTeams = $("#player_name").val();
         console.log("bteams",bTeams);
         
     
     $.ajax({
             type:"POST",
-            url:"/team/",
+            url:"/team/" + bTeams,
+            data: bTeams,
             dataType:'json'
         })
         .done(function (result) { //this waits for the ajax to return with a succesful promise object
