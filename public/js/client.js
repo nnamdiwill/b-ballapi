@@ -23,21 +23,21 @@
         
   });
   
-   $('#player_input').on('submit', function (event) {
+  //get player details
+  $('#player_input').on('submit', function (event) {
        //if the page refreshes when you submit the form use "preventDefault()" to force JavaScript to handle the form submission
         event.preventDefault();
-    var bTeams = $("#player_name").val();
-        console.log("bteams",bTeams);
+    var player_name = $("#player_name").val();
+        console.log("player_name",player_name);
         
     
     $.ajax({
-            type:"POST",
-            url:"/team/" + bTeams,
-            data: bTeams,
+            type:"GET",
+            url:"/player/" + player_name,
             dataType:'json'
         })
         .done(function (result) { //this waits for the ajax to return with a succesful promise object
-           //displayResults(result);
+           displayPlayerResults(result)
            console.log(result);
         })
        .fail(function (jqXHR, error, errorThrown) {
@@ -65,6 +65,24 @@
         buildTheHtmlOutput += "</li>";
     });
    $(".team-names-result ul").html(buildTheHtmlOutput);
+  }
+  
+  function displayPlayerResults(result){
+   
+   console.log(result);
+   
+    //create an empty variable to store one LI for each one the results
+    var buildTheHtmlOutput = "";
+
+    $.each(result, function (resultKey, resultValue) {
+
+        //create and populate one LI for each of the results
+        buildTheHtmlOutput += "<li>";
+        buildTheHtmlOutput += "<p>" + resultValue.player_name + "</p>"; 
+        buildTheHtmlOutput += "<p>" + resultValue.birth_date + "</p>"; 
+        buildTheHtmlOutput += "</li>";
+    });
+   $(".player-names-result ul").html(buildTheHtmlOutput);
   }
         
  });
